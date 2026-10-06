@@ -2,7 +2,7 @@
 
 Ứng dụng lưu và nhắc các ngày quan trọng (sinh nhật, kỷ niệm, ngày giỗ, hạn chót...). Web và mobile dùng chung dữ liệu qua Supabase.
 
-> Trạng thái: **Phase 0** (khung dự án). Chưa có database, logic ngày hay giao diện thật.
+> Trạng thái: **Phase 1** (database + RLS đã xong và có test). Chưa có logic ngày trong `core` hay giao diện thật.
 
 ## Cấu trúc
 
@@ -12,7 +12,7 @@ apps/
   mobile/     Expo (SDK 57, Expo Router) + NativeWind + lucide-react-native
 packages/
   core/       i18n (locales vi/en), design tokens màu, logic theme, về sau: schema Zod, logic ngày
-supabase/     (Phase 1) migrations, (Phase 5) edge functions
+supabase/     migrations (schema, trigger, RLS, storage), test RLS bằng PGlite; Phase 5: edge functions
 ```
 
 Web và mobile là hai app riêng (không dùng Expo universal). Logic không phụ thuộc giao diện đặt trong `packages/core`.
@@ -35,7 +35,7 @@ pnpm dev:web          # http://localhost:5173
 pnpm dev:mobile       # quét QR bằng Expo Go
 ```
 
-Biến môi trường: sao chép `.env.example` thành `apps/web/.env` và `apps/mobile/.env`, điền Supabase URL và **anon key**. Không bao giờ đưa `service_role` key vào client. Phase 0 chưa cần Supabase nên có thể bỏ qua bước này.
+Biến môi trường: sao chép `.env.example` thành `apps/web/.env` và `apps/mobile/.env`, điền Supabase URL và **anon key**. Không bao giờ đưa `service_role` key vào client. Cách dựng database và lấy URL, anon key: xem `supabase/README.md`.
 
 ## Lệnh hữu ích
 
@@ -44,7 +44,7 @@ Biến môi trường: sao chép `.env.example` thành `apps/web/.env` và `apps
 | `pnpm typecheck` | Kiểm tra TypeScript cho cả 3 package                              |
 | `pnpm lint`      | ESLint toàn repo                                                  |
 | `pnpm format`    | Prettier ghi đè; `pnpm format:check` để kiểm tra                  |
-| `pnpm test`      | Chạy Vitest (Phase 2 sẽ có test thật)                             |
+| `pnpm test`      | Chạy Vitest (test RLS/DB; Phase 2 thêm test logic ngày)           |
 | `pnpm build:web` | Build bản production cho web                                      |
 | `pnpm gen:types` | Sinh type từ Supabase local vào `packages/core` (dùng từ Phase 1) |
 
@@ -72,7 +72,7 @@ Biến môi trường: sao chép `.env.example` thành `apps/web/.env` và `apps
 ## Lộ trình
 
 - [x] Phase 0: khung monorepo, TS/ESLint/Prettier, Tailwind, NativeWind, i18n, theme
-- [ ] Phase 1: migration SQL, RLS, trigger, seed danh mục, kịch bản kiểm tra RLS
+- [x] Phase 1: migration SQL, RLS, trigger, seed danh mục, kịch bản kiểm tra RLS
 - [ ] Phase 2: logic ngày/lặp + test, schema Zod, hàm gọi Supabase
 - [ ] Phase 3: web app hoàn chỉnh theo MVP
 - [ ] Phase 4: mobile app

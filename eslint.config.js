@@ -10,6 +10,7 @@ export default tseslint.config(
       "**/dist/**",
       "**/.expo/**",
       "**/build/**",
+      "**/database.types.ts",
       "**/*.config.js",
       "**/*.config.cjs",
       "**/babel.config.js",
