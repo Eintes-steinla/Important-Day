@@ -1,0 +1,59 @@
+{
+  "app": {
+    "name": "Ngày quan trọng",
+    "tagline": "Không bỏ lỡ những ngày đáng nhớ"
+  },
+  "common": {
+    "save": "Lưu",
+    "cancel": "Hủy",
+    "delete": "Xóa",
+    "edit": "Sửa",
+    "add": "Thêm",
+    "loading": "Đang tải...",
+    "retry": "Thử lại",
+    "error": "Đã có lỗi xảy ra"
+  },
+  "nav": {
+    "home": "Trang chủ",
+    "categories": "Danh mục",
+    "settings": "Cài đặt"
+  },
+  "auth": {
+    "signIn": "Đăng nhập",
+    "signUp": "Đăng ký",
+    "signOut": "Đăng xuất",
+    "email": "Email",
+    "password": "Mật khẩu"
+  },
+  "events": {
+    "add": "Thêm sự kiện",
+    "upcoming": "Sắp tới",
+    "empty": "Chưa có sự kiện nào",
+    "countdown_one": "còn {{count}} ngày",
+    "countdown_other": "còn {{count}} ngày",
+    "today": "Hôm nay",
+    "tomorrow": "Ngày mai"
+  },
+  "categories": {
+    "default": {
+      "birthday": "Sinh nhật",
+      "anniversary": "Kỷ niệm",
+      "memorial": "Ngày giỗ",
+      "deadline": "Hạn chót"
+    }
+  },
+  "settings": {
+    "title": "Cài đặt",
+    "language": {
+      "title": "Ngôn ngữ",
+      "vi": "Tiếng Việt",
+      "en": "English"
+    },
+    "theme": {
+      "title": "Giao diện",
+      "light": "Sáng",
+      "dark": "Tối",
+      "system": "Theo hệ thống"
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "app": {
+    "name": "Important Dates",
+    "tagline": "Never miss the days that matter"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "loading": "Loading...",
+    "retry": "Retry",
+    "error": "Something went wrong"
+  },
+  "nav": {
+    "home": "Home",
+    "categories": "Categories",
+    "settings": "Settings"
+  },
+  "auth": {
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "signOut": "Sign out",
+    "email": "Email",
+    "password": "Password"
+  },
+  "events": {
+    "add": "Add event",
+    "upcoming": "Upcoming",
+    "empty": "No events yet",
+    "countdown_one": "{{count}} day left",
+    "countdown_other": "{{count}} days left",
+    "today": "Today",
+    "tomorrow": "Tomorrow"
+  },
+  "categories": {
+    "default": {
+      "birthday": "Birthday",
+      "anniversary": "Anniversary",
+      "memorial": "Memorial day",
+      "deadline": "Deadline"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "language": {
+      "title": "Language",
+      "vi": "Tiếng Việt",
+      "en": "English"
+    },
+    "theme": {
+      "title": "Appearance",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    }
+  }
+}

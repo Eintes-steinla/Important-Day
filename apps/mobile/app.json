@@ -1,0 +1,14 @@
+{
+  "expo": {
+    "name": "Important Dates",
+    "slug": "important-dates",
+    "version": "0.0.0",
+    "scheme": "importantdates",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "plugins": ["expo-router", "expo-localization", "expo-secure-store"],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Giá trị mặc định (light) trước khi JS đổ token từ packages/core vào :root */
+:root {
+  --color-background: 248 250 252;
+  --color-surface: 255 255 255;
+  --color-surface-muted: 241 245 249;
+  --color-text: 15 23 42;
+  --color-text-muted: 100 116 139;
+  --color-border: 226 232 240;
+  --color-primary: 79 70 229;
+  --color-primary-foreground: 255 255 255;
+  --color-danger: 220 38 38;
+}
+
+:root.dark {
+  --color-background: 11 17 32;
+  --color-surface: 17 24 39;
+  --color-surface-muted: 31 41 55;
+  --color-text: 241 245 249;
+  --color-text-muted: 148 163 184;
+  --color-border: 31 41 55;
+  --color-primary: 129 140 248;
+  --color-primary-foreground: 11 17 32;
+  --color-danger: 248 113 113;
+}
+
+body {
+  @apply bg-background text-foreground antialiased;
+}
