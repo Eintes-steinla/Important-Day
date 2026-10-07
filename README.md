@@ -2,7 +2,7 @@
 
 Ứng dụng lưu và nhắc các ngày quan trọng (sinh nhật, kỷ niệm, ngày giỗ, hạn chót...). Web và mobile dùng chung dữ liệu qua Supabase.
 
-> Trạng thái: **Phase 1** (database + RLS đã xong và có test). Chưa có logic ngày trong `core` hay giao diện thật.
+> Trạng thái: **Phase 3** (app web hoàn chỉnh theo MVP). Mobile (Phase 4) chưa làm.
 
 ## Cấu trúc
 
@@ -11,7 +11,7 @@ apps/
   web/        Vite + React + TypeScript + Tailwind + lucide-react
   mobile/     Expo (SDK 57, Expo Router) + NativeWind + lucide-react-native
 packages/
-  core/       i18n (locales vi/en), design tokens màu, logic theme, về sau: schema Zod, logic ngày
+  core/       logic ngày/lặp, schema Zod, hàm gọi Supabase, locales vi/en, design tokens màu, theme
 supabase/     migrations (schema, trigger, RLS, storage), test RLS bằng PGlite; Phase 5: edge functions
 ```
 
@@ -19,7 +19,7 @@ Web và mobile là hai app riêng (không dùng Expo universal). Logic không ph
 
 ## Yêu cầu
 
-- Node.js >= 20
+- Node.js >= 22 (`@supabase/supabase-js` mới yêu cầu từ Node 22)
 - pnpm 9 (`npm i -g pnpm@9.12.0`)
 - Mobile: app **Expo Go** trên điện thoại, hoặc Android Studio / Xcode để chạy emulator
 
@@ -35,7 +35,7 @@ pnpm dev:web          # http://localhost:5173
 pnpm dev:mobile       # quét QR bằng Expo Go
 ```
 
-Biến môi trường: sao chép `.env.example` thành `apps/web/.env` và `apps/mobile/.env`, điền Supabase URL và **anon key**. Không bao giờ đưa `service_role` key vào client. Cách dựng database và lấy URL, anon key: xem `supabase/README.md`.
+Biến môi trường: sao chép `.env.example` thành `apps/web/.env` và `apps/mobile/.env`, điền Supabase URL và khóa công khai (**publishable key** `sb_publishable_...` hoặc anon key cũ, dán vào `...ANON_KEY`). Không bao giờ đưa `service_role` key vào client. Cách dựng database và lấy URL, anon key: xem `supabase/README.md`.
 
 ## Lệnh hữu ích
 
@@ -44,9 +44,62 @@ Biến môi trường: sao chép `.env.example` thành `apps/web/.env` và `apps
 | `pnpm typecheck` | Kiểm tra TypeScript cho cả 3 package                              |
 | `pnpm lint`      | ESLint toàn repo                                                  |
 | `pnpm format`    | Prettier ghi đè; `pnpm format:check` để kiểm tra                  |
-| `pnpm test`      | Chạy Vitest (test RLS/DB; Phase 2 thêm test logic ngày)           |
+| `pnpm test`      | Chạy Vitest (logic ngày, schema, API, locales, RLS/DB)            |
 | `pnpm build:web` | Build bản production cho web                                      |
 | `pnpm gen:types` | Sinh type từ Supabase local vào `packages/core` (dùng từ Phase 1) |
+
+## packages/core
+
+Mọi logic không phụ thuộc giao diện nằm ở đây, web và mobile dùng chung (`import { ... } from "@important-dates/core"`).
+
+| Thư mục         | Nội dung                                                                                                                                                                                      |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/date/`     | `PlainDate` (ngày không múi giờ), `getNextOccurrence`, `listOccurrencesInRange` (lịch tháng), `daysUntil`, `getYearsSince`, 29/2, chỗ cắm âm lịch `lunarToSolar`, múi giờ, format theo locale |
+| `src/schemas/`  | Schema Zod: sự kiện, danh mục, profile, đăng nhập/đăng ký. Quy tắc khớp ràng buộc ở DB                                                                                                        |
+| `src/api/`      | Hàm gọi Supabase (CRUD sự kiện/danh mục, profile, auth), mapper, lỗi thống nhất, query keys                                                                                                   |
+| `locales/`      | `vi.json`, `en.json`                                                                                                                                                                          |
+| `src/tokens.ts` | Design tokens màu, bảng màu sự kiện (đã kiểm tra tương phản WCAG AA ở cả light và dark)                                                                                                       |
+
+Quy ước cần nhớ:
+
+- **Ngày** luôn là `PlainDate` `{ year, month, day }` hoặc chuỗi `YYYY-MM-DD`, không dùng `Date`/timestamp để tránh lệch múi giờ. "Hôm nay" lấy bằng `todayInTimeZone(profile.timezone)` để khớp cách DB tính `next_occurrence`.
+- **Lỗi validation** của Zod là key i18n: hiển thị bằng `t(issue.message)`. **Lỗi API** là `ApiError`: hiển thị bằng `t(getErrorMessageKey(error))`.
+- **Client Supabase** do từng app tạo bằng `createAppSupabaseClient` rồi truyền vào các hàm `listEvents(client)`, `createEvent(client, input)`... (mobile truyền thêm `storage` cho phiên đăng nhập). `parseSupabaseEnv` kiểm tra biến môi trường và từ chối khóa `service_role`.
+- **Logic ngày ở hai nơi** (hàm SQL `compute_next_occurrence` và `getNextOccurrence`) phải khớp nhau: `supabase/tests/parity.test.ts` đối chiếu hơn 48 nghìn tổ hợp. Sửa một bên thì chạy `pnpm test`.
+- **Âm lịch:** chưa có bộ quy đổi thật. Khi có, gọi `setLunarConverter(...)` một lần lúc khởi động app (Phase 5).
+- **Múi giờ:** `profiles.timezone` mặc định là `UTC` vì lúc đăng ký DB chưa biết múi giờ của người dùng. Web đã tự làm việc này ở lần đăng nhập đầu (`AppShell`); mobile (Phase 4) cần làm tương tự bằng `updateProfile(client, userId, { timezone: detectTimeZone() })`, nếu không `next_occurrence` do DB tính sẽ lệch ngày với giờ địa phương (giao diện vẫn đúng vì tính bằng `todayInTimeZone`).
+
+```ts
+import {
+  createAppSupabaseClient,
+  parseSupabaseEnv,
+  listEvents,
+  getNextOccurrence,
+  daysUntil,
+  todayInTimeZone,
+  getCountdownLabel,
+} from "@important-dates/core";
+
+const client = createAppSupabaseClient(parseSupabaseEnv({ url, anonKey }));
+const today = todayInTimeZone(profile.timezone);
+for (const event of await listEvents(client)) {
+  const next = getNextOccurrence(event, today); // null với âm lịch chưa quy đổi được
+  if (next) console.log(event.title, getCountdownLabel(daysUntil(next, today), t));
+}
+```
+
+## apps/web
+
+Chạy: `pnpm dev:web` (cần `apps/web/.env`, thiếu thì app hiện màn hình hướng dẫn thay vì trang trắng).
+
+| Thư mục           | Nội dung                                                                                       |
+| ----------------- | ---------------------------------------------------------------------------------------------- |
+| `src/providers/`  | Supabase, phiên đăng nhập, theme/ngôn ngữ, thông báo (toast), React Query                      |
+| `src/hooks/`      | Truy vấn và mutation dùng hàm của `packages/core`, `useToday` (theo múi giờ của profile)       |
+| `src/components/` | Lịch tháng, danh sách "Sắp tới", form sự kiện/danh mục, hộp thoại, bộ chọn màu/icon, khung app |
+| `src/pages/`      | Đăng nhập/đăng ký, Trang chủ, Danh mục, Cài đặt, 404, hướng dẫn cấu hình                       |
+
+Lưu ý khi triển khai: web dùng `BrowserRouter` nên host phải trả `index.html` cho mọi đường dẫn (SPA fallback), ví dụ Netlify `/* /index.html 200`, Vercel `rewrites`.
 
 ## Đa ngôn ngữ
 
@@ -73,7 +126,7 @@ Biến môi trường: sao chép `.env.example` thành `apps/web/.env` và `apps
 
 - [x] Phase 0: khung monorepo, TS/ESLint/Prettier, Tailwind, NativeWind, i18n, theme
 - [x] Phase 1: migration SQL, RLS, trigger, seed danh mục, kịch bản kiểm tra RLS
-- [ ] Phase 2: logic ngày/lặp + test, schema Zod, hàm gọi Supabase
-- [ ] Phase 3: web app hoàn chỉnh theo MVP
+- [x] Phase 2: logic ngày/lặp + test, schema Zod, hàm gọi Supabase
+- [x] Phase 3: web app hoàn chỉnh theo MVP
 - [ ] Phase 4: mobile app
 - [ ] Phase 5: nhắc nhở, âm lịch thật, chia sẻ lịch, ảnh đính kèm

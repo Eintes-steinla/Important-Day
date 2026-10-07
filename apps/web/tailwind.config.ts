@@ -17,7 +17,13 @@ export default {
         border: token("border"),
         primary: token("primary"),
         "primary-foreground": token("primary-foreground"),
+        accent: token("accent"),
         danger: token("danger"),
+      },
+      fontFamily: {
+        // Bricolage Grotesque cho tiêu đề và số ngày, Be Vietnam Pro cho nội dung (hỗ trợ tiếng Việt)
+        display: ['"Bricolage Grotesque Variable"', '"Be Vietnam Pro"', "system-ui", "sans-serif"],
+        sans: ['"Be Vietnam Pro"', "system-ui", "sans-serif"],
       },
     },
   },

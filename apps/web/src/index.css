@@ -2,31 +2,80 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Giá trị mặc định (light) trước khi JS đổ token từ packages/core vào :root */
+/* Giá trị mặc định (light) trước khi JS đổ token từ packages/core vào :root.
+   Phải khớp colorTokens trong packages/core/src/tokens.ts. */
 :root {
-  --color-background: 248 250 252;
+  --color-background: 244 245 250;
   --color-surface: 255 255 255;
-  --color-surface-muted: 241 245 249;
-  --color-text: 15 23 42;
-  --color-text-muted: 100 116 139;
-  --color-border: 226 232 240;
-  --color-primary: 79 70 229;
+  --color-surface-muted: 235 237 246;
+  --color-text: 28 27 58;
+  --color-text-muted: 90 91 122;
+  --color-border: 221 224 238;
+  --color-primary: 83 54 201;
   --color-primary-foreground: 255 255 255;
-  --color-danger: 220 38 38;
+  --color-accent: 194 37 92;
+  --color-danger: 179 38 30;
 }
 
 :root.dark {
-  --color-background: 11 17 32;
-  --color-surface: 17 24 39;
-  --color-surface-muted: 31 41 55;
-  --color-text: 241 245 249;
-  --color-text-muted: 148 163 184;
-  --color-border: 31 41 55;
-  --color-primary: 129 140 248;
-  --color-primary-foreground: 11 17 32;
-  --color-danger: 248 113 113;
+  --color-background: 18 17 32;
+  --color-surface: 27 26 45;
+  --color-surface-muted: 38 37 61;
+  --color-text: 236 235 250;
+  --color-text-muted: 163 163 196;
+  --color-border: 45 44 72;
+  --color-primary: 169 155 255;
+  --color-primary-foreground: 21 19 58;
+  --color-accent: 255 124 156;
+  --color-danger: 255 138 128;
 }
 
-body {
-  @apply bg-background text-foreground antialiased;
+@layer base {
+  html {
+    color-scheme: light;
+  }
+  html.dark {
+    color-scheme: dark;
+  }
+  body {
+    @apply bg-background font-sans text-foreground antialiased;
+  }
+  /* Viền focus luôn hiện khi dùng bàn phím */
+  :focus-visible {
+    outline: 2px solid rgb(var(--color-primary));
+    outline-offset: 2px;
+  }
+  dialog::backdrop {
+    background: rgb(var(--color-text) / 0.45);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* Hộp thoại mở lên từ đáy trên điện thoại, nằm giữa trên màn hình lớn. Chỉ chuyển động khi người dùng mở. */
+  .app-dialog {
+    @apply m-0 mt-auto max-h-[92dvh] w-full max-w-none overflow-y-auto rounded-t-2xl bg-surface p-0 text-foreground sm:m-auto sm:max-w-lg sm:rounded-2xl;
+  }
+  .app-dialog[open] {
+    animation: dialog-in 160ms ease-out;
+  }
+  @keyframes dialog-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
 }

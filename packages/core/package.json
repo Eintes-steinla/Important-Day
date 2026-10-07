@@ -15,7 +15,9 @@
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
-    "i18next": "^26.4.2"
+    "@supabase/supabase-js": "^2.117.2",
+    "i18next": "^26.4.2",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "typescript": "~5.6.3",

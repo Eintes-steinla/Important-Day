@@ -30,6 +30,8 @@ export function createI18n(initialLanguage: Language): i18n {
     resources,
     lng: initialLanguage,
     fallbackLng: FALLBACK_LANGUAGE,
+    // Resource nằm sẵn trong bundle nên khởi tạo đồng bộ, dùng `t()` được ngay
+    initAsync: false,
     interpolation: { escapeValue: false },
     returnNull: false,
   });

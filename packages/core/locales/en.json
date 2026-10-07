@@ -9,9 +9,13 @@
     "delete": "Delete",
     "edit": "Edit",
     "add": "Add",
+    "close": "Close",
+    "optional": "Optional",
     "loading": "Loading...",
     "retry": "Retry",
-    "error": "Something went wrong"
+    "error": "Something went wrong",
+    "saving": "Saving...",
+    "back": "Back"
   },
   "nav": {
     "home": "Home",
@@ -23,24 +27,93 @@
     "signUp": "Sign up",
     "signOut": "Sign out",
     "email": "Email",
-    "password": "Password"
+    "password": "Password",
+    "displayName": "Display name",
+    "checkEmail": "Check your email to confirm your account",
+    "signInTitle": "Welcome back",
+    "signUpTitle": "Create your account",
+    "noAccount": "No account yet?",
+    "haveAccount": "Already have an account?",
+    "passwordHint": "At least 8 characters",
+    "signingIn": "Signing in...",
+    "signingUp": "Creating account...",
+    "checkEmailHint": "After confirming, come back here and sign in."
   },
   "events": {
     "add": "Add event",
+    "edit": "Edit event",
     "upcoming": "Upcoming",
     "empty": "No events yet",
     "countdown_one": "{{count}} day left",
     "countdown_other": "{{count}} days left",
     "today": "Today",
-    "tomorrow": "Tomorrow"
+    "tomorrow": "Tomorrow",
+    "passed": "Passed",
+    "yearsSince_one": "{{count}} year",
+    "yearsSince_other": "{{count}} years",
+    "fields": {
+      "title": "Title",
+      "note": "Note",
+      "date": "Date",
+      "day": "Day",
+      "month": "Month",
+      "year": "Year",
+      "yearUnknown": "Year unknown",
+      "calendarType": "Calendar",
+      "solar": "Solar",
+      "lunar": "Lunar",
+      "leapMonth": "Leap month",
+      "remind": "Remind me",
+      "remindDays_one": "{{count}} day before",
+      "remindDays_other": "{{count}} days before",
+      "remindOnDay": "On the day",
+      "category": "Category",
+      "noCategory": "No category",
+      "color": "Color",
+      "icon": "Icon",
+      "useCategoryColor": "Match category",
+      "useCategoryIcon": "Match category",
+      "lunarHint": "Lunar dates are saved now; conversion to solar dates comes in a later release.",
+      "remindHint": "Reminder notifications come in a later release; your choices are saved from now on.",
+      "appearance": "Color and icon"
+    },
+    "emptyTitle": "No important dates yet",
+    "emptyHint": "Add a birthday, anniversary or deadline to start counting down.",
+    "next": "Up next",
+    "showMore": "Show more",
+    "showLess": "Show less",
+    "lunarPendingTitle": "Lunar dates without a solar date",
+    "lunarPendingHint": "Solar dates will appear once lunar conversion is supported.",
+    "lunarDate": "{{day}}/{{month}} lunar",
+    "leapMonthSuffix": "(leap)",
+    "delete": "Delete event",
+    "deleteTitle": "Delete “{{title}}”?",
+    "deleteBody": "This event will be permanently deleted.",
+    "created": "Event added",
+    "updated": "Event saved",
+    "deleted": "Event deleted"
   },
   "categories": {
+    "add": "Add category",
+    "edit": "Edit category",
+    "fields": {
+      "name": "Category name"
+    },
     "default": {
       "birthday": "Birthday",
       "anniversary": "Anniversary",
       "memorial": "Memorial day",
       "deadline": "Deadline"
-    }
+    },
+    "empty": "No categories yet.",
+    "eventCount_one": "{{count}} event",
+    "eventCount_other": "{{count}} events",
+    "delete": "Delete category",
+    "deleteTitle": "Delete category “{{name}}”?",
+    "deleteBody": "Events in this category are kept, they just lose their category.",
+    "created": "Category added",
+    "updated": "Category saved",
+    "deleted": "Category deleted"
   },
   "settings": {
     "title": "Settings",
@@ -54,6 +127,95 @@
       "light": "Light",
       "dark": "Dark",
       "system": "System"
+    },
+    "timezone": "Time zone",
+    "account": "Account",
+    "signedInAs": "Signed in as {{email}}",
+    "saved": "Settings saved",
+    "timezoneHint": "Used to decide what “today” is for countdowns."
+  },
+  "validation": {
+    "title": {
+      "required": "Please enter a title",
+      "tooLong": "Title can be at most 200 characters"
+    },
+    "note": {
+      "tooLong": "Note can be at most 5000 characters"
+    },
+    "date": {
+      "invalid": "This day does not exist in the selected month",
+      "feb29NotLeap": "February 29 only exists in leap years"
+    },
+    "year": {
+      "invalid": "Year must be between 1 and 9999"
+    },
+    "leapMonth": {
+      "lunarOnly": "Leap month only applies to the lunar calendar"
+    },
+    "remind": {
+      "invalid": "Reminder days must be between 0 and 365",
+      "tooMany": "At most 10 reminders"
+    },
+    "category": {
+      "nameRequired": "Please enter a category name",
+      "nameTooLong": "Category name can be at most 60 characters"
+    },
+    "email": {
+      "invalid": "Invalid email address"
+    },
+    "password": {
+      "required": "Please enter your password",
+      "tooShort": "Password must be at least 8 characters",
+      "tooLong": "Password can be at most 72 characters"
+    },
+    "displayName": {
+      "tooLong": "Display name can be at most 100 characters"
+    },
+    "timezone": {
+      "invalid": "Invalid time zone"
     }
+  },
+  "errors": {
+    "generic": "Something went wrong, please try again",
+    "network": "No network connection",
+    "notFound": "Data not found",
+    "permissionDenied": "You do not have permission to do this",
+    "invalidData": "Invalid data",
+    "duplicate": "This already exists",
+    "auth": {
+      "invalidCredentials": "Incorrect email or password",
+      "emailNotConfirmed": "Email has not been confirmed",
+      "userExists": "This email is already registered",
+      "weakPassword": "Password is too weak",
+      "rateLimited": "Too many attempts, please try again later"
+    },
+    "loadFailed": "Couldn't load your data",
+    "loadFailedHint": "Check your connection and try again."
+  },
+  "a11y": {
+    "skipToContent": "Skip to content",
+    "mainNav": "Main navigation"
+  },
+  "setup": {
+    "title": "Supabase is not connected",
+    "body": "The app needs your Supabase project URL and public key (anon or publishable) to store data.",
+    "step1": "Copy .env.example to apps/web/.env",
+    "step2": "Fill in VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY",
+    "step3": "Restart pnpm dev:web"
+  },
+  "notFound": {
+    "title": "We can't find that page",
+    "back": "Back to home"
+  },
+  "calendar": {
+    "title": "Calendar",
+    "prevMonth": "Previous month",
+    "nextMonth": "Next month",
+    "goToToday": "Today",
+    "dayLabel_one": "{{date}}, {{count}} event",
+    "dayLabel_other": "{{date}}, {{count}} events",
+    "moreEvents": "+{{count}}",
+    "dayEmpty": "Nothing on this day.",
+    "addOnDay": "Add an event on this day"
   }
 }

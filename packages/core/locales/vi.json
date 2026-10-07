@@ -9,9 +9,13 @@
     "delete": "Xóa",
     "edit": "Sửa",
     "add": "Thêm",
+    "close": "Đóng",
+    "optional": "Không bắt buộc",
     "loading": "Đang tải...",
     "retry": "Thử lại",
-    "error": "Đã có lỗi xảy ra"
+    "error": "Đã có lỗi xảy ra",
+    "saving": "Đang lưu...",
+    "back": "Quay lại"
   },
   "nav": {
     "home": "Trang chủ",
@@ -23,24 +27,93 @@
     "signUp": "Đăng ký",
     "signOut": "Đăng xuất",
     "email": "Email",
-    "password": "Mật khẩu"
+    "password": "Mật khẩu",
+    "displayName": "Tên hiển thị",
+    "checkEmail": "Hãy kiểm tra email để xác nhận tài khoản",
+    "signInTitle": "Chào mừng quay lại",
+    "signUpTitle": "Tạo tài khoản",
+    "noAccount": "Chưa có tài khoản?",
+    "haveAccount": "Đã có tài khoản?",
+    "passwordHint": "Tối thiểu 8 ký tự",
+    "signingIn": "Đang đăng nhập...",
+    "signingUp": "Đang tạo tài khoản...",
+    "checkEmailHint": "Sau khi xác nhận, quay lại đây và đăng nhập."
   },
   "events": {
     "add": "Thêm sự kiện",
+    "edit": "Sửa sự kiện",
     "upcoming": "Sắp tới",
     "empty": "Chưa có sự kiện nào",
     "countdown_one": "còn {{count}} ngày",
     "countdown_other": "còn {{count}} ngày",
     "today": "Hôm nay",
-    "tomorrow": "Ngày mai"
+    "tomorrow": "Ngày mai",
+    "passed": "Đã qua",
+    "yearsSince_one": "{{count}} năm",
+    "yearsSince_other": "{{count}} năm",
+    "fields": {
+      "title": "Tiêu đề",
+      "note": "Ghi chú",
+      "date": "Ngày",
+      "day": "Ngày",
+      "month": "Tháng",
+      "year": "Năm",
+      "yearUnknown": "Không rõ năm",
+      "calendarType": "Loại lịch",
+      "solar": "Dương lịch",
+      "lunar": "Âm lịch",
+      "leapMonth": "Tháng nhuận",
+      "remind": "Nhắc trước",
+      "remindDays_one": "{{count}} ngày",
+      "remindDays_other": "{{count}} ngày",
+      "remindOnDay": "Vào đúng ngày",
+      "category": "Danh mục",
+      "noCategory": "Không có danh mục",
+      "color": "Màu",
+      "icon": "Biểu tượng",
+      "useCategoryColor": "Theo danh mục",
+      "useCategoryIcon": "Theo danh mục",
+      "lunarHint": "Ngày âm lịch được lưu lại, việc quy đổi sang ngày dương sẽ có ở bản sau.",
+      "remindHint": "Thông báo nhắc nhở sẽ có ở bản sau, lựa chọn của bạn được lưu từ bây giờ.",
+      "appearance": "Màu và biểu tượng"
+    },
+    "emptyTitle": "Chưa có ngày quan trọng nào",
+    "emptyHint": "Thêm sinh nhật, ngày kỷ niệm hay hạn chót đầu tiên để bắt đầu đếm ngược.",
+    "next": "Tiếp theo",
+    "showMore": "Xem thêm",
+    "showLess": "Thu gọn",
+    "lunarPendingTitle": "Âm lịch, chưa có ngày dương",
+    "lunarPendingHint": "Ngày dương sẽ hiện khi ứng dụng hỗ trợ quy đổi âm lịch.",
+    "lunarDate": "{{day}}/{{month}} âm lịch",
+    "leapMonthSuffix": "(nhuận)",
+    "delete": "Xóa sự kiện",
+    "deleteTitle": "Xóa “{{title}}”?",
+    "deleteBody": "Sự kiện sẽ bị xóa vĩnh viễn.",
+    "created": "Đã thêm sự kiện",
+    "updated": "Đã lưu sự kiện",
+    "deleted": "Đã xóa sự kiện"
   },
   "categories": {
+    "add": "Thêm danh mục",
+    "edit": "Sửa danh mục",
+    "fields": {
+      "name": "Tên danh mục"
+    },
     "default": {
       "birthday": "Sinh nhật",
       "anniversary": "Kỷ niệm",
       "memorial": "Ngày giỗ",
       "deadline": "Hạn chót"
-    }
+    },
+    "empty": "Chưa có danh mục nào.",
+    "eventCount_one": "{{count}} sự kiện",
+    "eventCount_other": "{{count}} sự kiện",
+    "delete": "Xóa danh mục",
+    "deleteTitle": "Xóa danh mục “{{name}}”?",
+    "deleteBody": "Các sự kiện trong danh mục này vẫn được giữ lại, chỉ bỏ phân loại.",
+    "created": "Đã thêm danh mục",
+    "updated": "Đã lưu danh mục",
+    "deleted": "Đã xóa danh mục"
   },
   "settings": {
     "title": "Cài đặt",
@@ -54,6 +127,95 @@
       "light": "Sáng",
       "dark": "Tối",
       "system": "Theo hệ thống"
+    },
+    "timezone": "Múi giờ",
+    "account": "Tài khoản",
+    "signedInAs": "Đăng nhập với {{email}}",
+    "saved": "Đã lưu cài đặt",
+    "timezoneHint": "Dùng để xác định “hôm nay” khi đếm ngược."
+  },
+  "validation": {
+    "title": {
+      "required": "Vui lòng nhập tiêu đề",
+      "tooLong": "Tiêu đề tối đa 200 ký tự"
+    },
+    "note": {
+      "tooLong": "Ghi chú tối đa 5000 ký tự"
+    },
+    "date": {
+      "invalid": "Ngày không tồn tại trong tháng này",
+      "feb29NotLeap": "29/2 chỉ có ở năm nhuận"
+    },
+    "year": {
+      "invalid": "Năm phải từ 1 đến 9999"
+    },
+    "leapMonth": {
+      "lunarOnly": "Tháng nhuận chỉ áp dụng cho âm lịch"
+    },
+    "remind": {
+      "invalid": "Số ngày nhắc trước phải từ 0 đến 365",
+      "tooMany": "Tối đa 10 mốc nhắc"
+    },
+    "category": {
+      "nameRequired": "Vui lòng nhập tên danh mục",
+      "nameTooLong": "Tên danh mục tối đa 60 ký tự"
+    },
+    "email": {
+      "invalid": "Email không hợp lệ"
+    },
+    "password": {
+      "required": "Vui lòng nhập mật khẩu",
+      "tooShort": "Mật khẩu tối thiểu 8 ký tự",
+      "tooLong": "Mật khẩu tối đa 72 ký tự"
+    },
+    "displayName": {
+      "tooLong": "Tên hiển thị tối đa 100 ký tự"
+    },
+    "timezone": {
+      "invalid": "Múi giờ không hợp lệ"
     }
+  },
+  "errors": {
+    "generic": "Đã có lỗi xảy ra, vui lòng thử lại",
+    "network": "Không có kết nối mạng",
+    "notFound": "Không tìm thấy dữ liệu",
+    "permissionDenied": "Bạn không có quyền thực hiện thao tác này",
+    "invalidData": "Dữ liệu không hợp lệ",
+    "duplicate": "Dữ liệu đã tồn tại",
+    "auth": {
+      "invalidCredentials": "Email hoặc mật khẩu không đúng",
+      "emailNotConfirmed": "Email chưa được xác nhận",
+      "userExists": "Email này đã được đăng ký",
+      "weakPassword": "Mật khẩu quá yếu",
+      "rateLimited": "Thao tác quá nhanh, vui lòng thử lại sau"
+    },
+    "loadFailed": "Không tải được dữ liệu",
+    "loadFailedHint": "Kiểm tra kết nối rồi thử lại."
+  },
+  "a11y": {
+    "skipToContent": "Bỏ qua điều hướng",
+    "mainNav": "Điều hướng chính"
+  },
+  "setup": {
+    "title": "Chưa kết nối Supabase",
+    "body": "Ứng dụng cần địa chỉ project và khóa công khai (anon hoặc publishable) của Supabase để lưu dữ liệu.",
+    "step1": "Sao chép .env.example thành apps/web/.env",
+    "step2": "Điền VITE_SUPABASE_URL và VITE_SUPABASE_ANON_KEY",
+    "step3": "Khởi động lại pnpm dev:web"
+  },
+  "notFound": {
+    "title": "Không tìm thấy trang này",
+    "back": "Về trang chủ"
+  },
+  "calendar": {
+    "title": "Lịch",
+    "prevMonth": "Tháng trước",
+    "nextMonth": "Tháng sau",
+    "goToToday": "Hôm nay",
+    "dayLabel_one": "{{date}}, {{count}} sự kiện",
+    "dayLabel_other": "{{date}}, {{count}} sự kiện",
+    "moreEvents": "+{{count}}",
+    "dayEmpty": "Không có sự kiện nào trong ngày này.",
+    "addOnDay": "Thêm sự kiện vào ngày này"
   }
 }

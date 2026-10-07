@@ -1,0 +1,111 @@
+import {
+  AlarmClock,
+  Baby,
+  Bell,
+  BookOpen,
+  Briefcase,
+  Cake,
+  CakeSlice,
+  Calendar,
+  Camera,
+  Car,
+  Cat,
+  Coffee,
+  Crown,
+  Dog,
+  Dumbbell,
+  FileText,
+  Flag,
+  Flame,
+  Flower2,
+  Gem,
+  Gift,
+  GraduationCap,
+  Heart,
+  HeartHandshake,
+  House,
+  MapPin,
+  Moon,
+  Music,
+  PartyPopper,
+  Plane,
+  ShoppingBag,
+  Sprout,
+  Star,
+  Stethoscope,
+  Sun,
+  Tag,
+  Trophy,
+  Users,
+  Utensils,
+  Wallet,
+  type LucideIcon,
+} from "lucide-react";
+import { DEFAULT_EVENT_ICON, type EventIconName } from "@important-dates/core";
+
+/** Ánh xạ tên Lucide (lưu ở DB) sang component. Có test đảm bảo đủ mọi tên trong EVENT_ICON_NAMES. */
+export const ICONS: Record<EventIconName, LucideIcon> = {
+  calendar: Calendar,
+  cake: Cake,
+  "cake-slice": CakeSlice,
+  gift: Gift,
+  "party-popper": PartyPopper,
+  heart: Heart,
+  "heart-handshake": HeartHandshake,
+  gem: Gem,
+  baby: Baby,
+  "graduation-cap": GraduationCap,
+  briefcase: Briefcase,
+  "alarm-clock": AlarmClock,
+  "file-text": FileText,
+  wallet: Wallet,
+  plane: Plane,
+  car: Car,
+  house: House,
+  "flower-2": Flower2,
+  flame: Flame,
+  sprout: Sprout,
+  star: Star,
+  trophy: Trophy,
+  crown: Crown,
+  music: Music,
+  camera: Camera,
+  "book-open": BookOpen,
+  utensils: Utensils,
+  coffee: Coffee,
+  dumbbell: Dumbbell,
+  stethoscope: Stethoscope,
+  users: Users,
+  dog: Dog,
+  cat: Cat,
+  sun: Sun,
+  moon: Moon,
+  bell: Bell,
+  flag: Flag,
+  "map-pin": MapPin,
+  "shopping-bag": ShoppingBag,
+  tag: Tag,
+};
+
+function isIconName(name: string): name is EventIconName {
+  return name in ICONS;
+}
+
+/** Tên lạ (dữ liệu cũ, tên đã bị bớt khỏi danh sách) vẫn hiển thị được bằng icon mặc định. */
+export function getIcon(name: string | null | undefined): LucideIcon {
+  if (name && isIconName(name)) return ICONS[name];
+  return ICONS[DEFAULT_EVENT_ICON as EventIconName];
+}
+
+export function EventIcon({
+  name,
+  className,
+  size = 18,
+}: {
+  name: string | null | undefined;
+  className?: string;
+  size?: number;
+}) {
+  const Icon = getIcon(name);
+  return <Icon aria-hidden="true" size={size} className={className} />;
+}

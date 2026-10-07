@@ -1,3 +1,4 @@
+import { DEFAULT_EVENT_COLOR_KEY } from "./constants";
 import type { ResolvedTheme } from "./theme";
 
 /**
@@ -14,31 +15,40 @@ export interface ColorTokens {
   border: string;
   primary: string;
   primaryForeground: string;
+  /** Màu lề đỏ của vở học sinh: đánh dấu "hôm nay" và sự kiện sắp đến. Không dùng cho lỗi. */
+  accent: string;
+  /** Lỗi và thao tác xóa. */
   danger: string;
 }
 
+/**
+ * Bảng màu "mực tím": nền giấy hơi xanh, chữ mực tối, màu chính là mực tím của bút học sinh,
+ * màu nhấn là lề đỏ của trang vở. Mọi cặp chữ/nền đều đạt WCAG AA (có test).
+ */
 export const colorTokens: Record<ResolvedTheme, ColorTokens> = {
   light: {
-    background: "#f8fafc",
+    background: "#f4f5fa",
     surface: "#ffffff",
-    surfaceMuted: "#f1f5f9",
-    text: "#0f172a",
-    textMuted: "#64748b",
-    border: "#e2e8f0",
-    primary: "#4f46e5",
+    surfaceMuted: "#ebedf6",
+    text: "#1c1b3a",
+    textMuted: "#5a5b7a",
+    border: "#dde0ee",
+    primary: "#5336c9",
     primaryForeground: "#ffffff",
-    danger: "#dc2626",
+    accent: "#c2255c",
+    danger: "#b3261e",
   },
   dark: {
-    background: "#0b1120",
-    surface: "#111827",
-    surfaceMuted: "#1f2937",
-    text: "#f1f5f9",
-    textMuted: "#94a3b8",
-    border: "#1f2937",
-    primary: "#818cf8",
-    primaryForeground: "#0b1120",
-    danger: "#f87171",
+    background: "#121120",
+    surface: "#1b1a2d",
+    surfaceMuted: "#26253d",
+    text: "#ecebfa",
+    textMuted: "#a3a3c4",
+    border: "#2d2c48",
+    primary: "#a99bff",
+    primaryForeground: "#15133a",
+    accent: "#ff7c9c",
+    danger: "#ff8a80",
   },
 };
 
@@ -93,3 +103,23 @@ export const eventColors: readonly EventColor[] = [
     dark: { bg: "#3b0764", fg: "#e9d5ff" },
   },
 ] as const;
+
+export function isEventColorKey(key: string | null | undefined): boolean {
+  return eventColors.some((color) => color.key === key);
+}
+
+/**
+ * Cặp màu nền/chữ của một khóa màu theo theme. Khóa không có trong bảng (hoặc null) thì
+ * dùng màu mặc định, nên đổi bảng màu sau này không làm hỏng dữ liệu cũ.
+ */
+export function getEventColor(
+  key: string | null | undefined,
+  theme: ResolvedTheme,
+): { bg: string; fg: string } {
+  const found = eventColors.find((color) => color.key === key);
+  const color =
+    found ?? eventColors.find((c) => c.key === DEFAULT_EVENT_COLOR_KEY) ?? eventColors[0];
+  // eventColors luôn có phần tử; kiểm tra để thỏa noUncheckedIndexedAccess
+  if (!color) throw new Error("eventColors rỗng");
+  return color[theme];
+}
