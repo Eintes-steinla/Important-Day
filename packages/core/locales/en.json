@@ -132,7 +132,9 @@
     "account": "Account",
     "signedInAs": "Signed in as {{email}}",
     "saved": "Settings saved",
-    "timezoneHint": "Used to decide what “today” is for countdowns."
+    "timezoneHint": "Used to decide what “today” is for countdowns.",
+    "timezoneUseDevice": "Use this device's time zone",
+    "timezoneCurrent": "Current: {{zone}}"
   },
   "validation": {
     "title": {
@@ -201,7 +203,10 @@
     "body": "The app needs your Supabase project URL and public key (anon or publishable) to store data.",
     "step1": "Copy .env.example to apps/web/.env",
     "step2": "Fill in VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY",
-    "step3": "Restart pnpm dev:web"
+    "step3": "Restart pnpm dev:web",
+    "step1Mobile": "Copy .env.example to apps/mobile/.env",
+    "step2Mobile": "Fill in EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_ANON_KEY",
+    "step3Mobile": "Restart pnpm dev:mobile"
   },
   "notFound": {
     "title": "We can't find that page",

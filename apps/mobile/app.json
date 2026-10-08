@@ -1,14 +1,11 @@
 {
   "expo": {
-    "name": "Important Dates",
+    "name": "Ng\u00e0y quan tr\u1ecdng",
     "slug": "important-dates",
     "version": "0.0.0",
     "scheme": "importantdates",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
-    "plugins": ["expo-router", "expo-localization", "expo-secure-store"],
-    "experiments": {
-      "typedRoutes": true
-    }
+    "plugins": ["expo-router", "expo-localization", "expo-secure-store", "expo-font"]
   }
 }

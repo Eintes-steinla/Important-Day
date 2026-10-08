@@ -3,9 +3,18 @@
   "compilerOptions": {
     "jsx": "react-native",
     "noEmit": true,
-    "lib": ["ES2022"],
+    "lib": [
+      "ES2022"
+    ],
     "types": []
   },
-  "include": ["**/*.ts", "**/*.tsx", "nativewind-env.d.ts", ".expo/types/**/*.ts", "expo-env.d.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "nativewind-env.d.ts",
+    "env.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

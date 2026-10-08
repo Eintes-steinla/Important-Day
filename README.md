@@ -2,7 +2,7 @@
 
 Ứng dụng lưu và nhắc các ngày quan trọng (sinh nhật, kỷ niệm, ngày giỗ, hạn chót...). Web và mobile dùng chung dữ liệu qua Supabase.
 
-> Trạng thái: **Phase 3** (app web hoàn chỉnh theo MVP). Mobile (Phase 4) chưa làm.
+> Trạng thái: **Phase 4** (web và mobile đều hoàn chỉnh theo MVP). Nhắc nhở, âm lịch thật, chia sẻ (Phase 5) chưa làm.
 
 ## Cấu trúc
 
@@ -67,7 +67,7 @@ Quy ước cần nhớ:
 - **Client Supabase** do từng app tạo bằng `createAppSupabaseClient` rồi truyền vào các hàm `listEvents(client)`, `createEvent(client, input)`... (mobile truyền thêm `storage` cho phiên đăng nhập). `parseSupabaseEnv` kiểm tra biến môi trường và từ chối khóa `service_role`.
 - **Logic ngày ở hai nơi** (hàm SQL `compute_next_occurrence` và `getNextOccurrence`) phải khớp nhau: `supabase/tests/parity.test.ts` đối chiếu hơn 48 nghìn tổ hợp. Sửa một bên thì chạy `pnpm test`.
 - **Âm lịch:** chưa có bộ quy đổi thật. Khi có, gọi `setLunarConverter(...)` một lần lúc khởi động app (Phase 5).
-- **Múi giờ:** `profiles.timezone` mặc định là `UTC` vì lúc đăng ký DB chưa biết múi giờ của người dùng. Web đã tự làm việc này ở lần đăng nhập đầu (`AppShell`); mobile (Phase 4) cần làm tương tự bằng `updateProfile(client, userId, { timezone: detectTimeZone() })`, nếu không `next_occurrence` do DB tính sẽ lệch ngày với giờ địa phương (giao diện vẫn đúng vì tính bằng `todayInTimeZone`).
+- **Múi giờ:** `profiles.timezone` mặc định là `UTC` vì lúc đăng ký DB chưa biết múi giờ của người dùng. Web (`AppShell`) và mobile (`app/(app)/_layout.tsx`) đã tự làm việc này ở lần đăng nhập đầu, bằng `updateProfile(client, userId, { timezone: detectTimeZone() })`, nếu không `next_occurrence` do DB tính sẽ lệch ngày với giờ địa phương (giao diện vẫn đúng vì tính bằng `todayInTimeZone`).
 
 ```ts
 import {
@@ -101,6 +101,19 @@ Chạy: `pnpm dev:web` (cần `apps/web/.env`, thiếu thì app hiện màn hìn
 
 Lưu ý khi triển khai: web dùng `BrowserRouter` nên host phải trả `index.html` cho mọi đường dẫn (SPA fallback), ví dụ Netlify `/* /index.html 200`, Vercel `rewrites`.
 
+## apps/mobile
+
+Chạy: `pnpm dev:mobile`, quét QR bằng Expo Go (cần `apps/mobile/.env`, thiếu thì app hiện màn hình hướng dẫn). Cấu trúc giống web: Expo Router với nhóm `(auth)` (đăng nhập, đăng ký) và `(app)` (3 tab Trang chủ, Danh mục, Cài đặt cùng hai màn hình modal form sự kiện/danh mục). Route được bảo vệ bằng `Stack.Protected` theo phiên đăng nhập.
+
+| Thư mục           | Nội dung                                                                                             |
+| ----------------- | ---------------------------------------------------------------------------------------------------- |
+| `app/`            | Route của Expo Router (mỏng, chỉ trỏ tới `src/screens`)                                              |
+| `src/screens/`    | Màn hình: đăng nhập/đăng ký, Trang chủ, Danh mục, Cài đặt, form sự kiện/danh mục, hướng dẫn cấu hình |
+| `src/components/` | Lịch tháng, "Sắp tới", tờ lịch (`EventLeaf`), bộ chọn màu/icon, ô nhập, nút                          |
+| `src/providers/`  | Supabase, phiên đăng nhập (lưu bằng AsyncStorage), theme/ngôn ngữ, thông báo                         |
+
+Ghi chú: phiên đăng nhập lưu bằng AsyncStorage (khuyến nghị của Supabase, vì phiên vượt giới hạn 2KB của SecureStore). Font nạp bằng `expo-font`, mỗi độ đậm là một family riêng (xem `tailwind.config.js`). `src/hooks/queries.ts` có cùng cấu trúc với bản web và dùng chung `queryKeys` của core.
+
 ## Đa ngôn ngữ
 
 - File dịch: `packages/core/locales/{vi,en}.json`, key phân cấp (`settings.theme.dark`...).
@@ -128,5 +141,5 @@ Lưu ý khi triển khai: web dùng `BrowserRouter` nên host phải trả `inde
 - [x] Phase 1: migration SQL, RLS, trigger, seed danh mục, kịch bản kiểm tra RLS
 - [x] Phase 2: logic ngày/lặp + test, schema Zod, hàm gọi Supabase
 - [x] Phase 3: web app hoàn chỉnh theo MVP
-- [ ] Phase 4: mobile app
+- [x] Phase 4: mobile app
 - [ ] Phase 5: nhắc nhở, âm lịch thật, chia sẻ lịch, ảnh đính kèm

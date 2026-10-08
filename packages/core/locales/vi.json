@@ -132,7 +132,9 @@
     "account": "Tài khoản",
     "signedInAs": "Đăng nhập với {{email}}",
     "saved": "Đã lưu cài đặt",
-    "timezoneHint": "Dùng để xác định “hôm nay” khi đếm ngược."
+    "timezoneHint": "Dùng để xác định “hôm nay” khi đếm ngược.",
+    "timezoneUseDevice": "Dùng múi giờ của thiết bị",
+    "timezoneCurrent": "Đang dùng: {{zone}}"
   },
   "validation": {
     "title": {
@@ -201,7 +203,10 @@
     "body": "Ứng dụng cần địa chỉ project và khóa công khai (anon hoặc publishable) của Supabase để lưu dữ liệu.",
     "step1": "Sao chép .env.example thành apps/web/.env",
     "step2": "Điền VITE_SUPABASE_URL và VITE_SUPABASE_ANON_KEY",
-    "step3": "Khởi động lại pnpm dev:web"
+    "step3": "Khởi động lại pnpm dev:web",
+    "step1Mobile": "Sao chép .env.example thành apps/mobile/.env",
+    "step2Mobile": "Điền EXPO_PUBLIC_SUPABASE_URL và EXPO_PUBLIC_SUPABASE_ANON_KEY",
+    "step3Mobile": "Khởi động lại pnpm dev:mobile"
   },
   "notFound": {
     "title": "Không tìm thấy trang này",
